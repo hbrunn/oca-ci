@@ -36,9 +36,8 @@ Environment variables:
 - `INCLUDE=`
 - `EXCLUDE=`
 - `OCA_GIT_USER_NAME=oca-ci`: git user name to commit `.pot` files
-- `OCA_GIT_USER_EMAIL=oca-ci@odoo-community.org`: git user email to commit
-- `OCA_ENABLE_CHECKLOG_ODOO=`: enable odoo log error checking
-  `.pot` files
+- `OCA_GIT_USER_EMAIL=oca-ci@odoo-community.org`: git user email to commit `.pot` files
+- `OCA_ENABLE_CHECKLOG_ODOO=`: enable Odoo log error checking
 
 Available commands:
 
