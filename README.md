@@ -9,7 +9,7 @@ compatibility. ⚠️
 
 These images provide the following guarantees:
 
-- Odoo runtime dependencies are installed (`wkhtmltopdf`, `lessc`, etc).
+- Odoo runtime dependencies are installed depending on version(`wkhtmltopdf`, `lessc`, `paper-muncher`, etc).
 - Odoo source code is in `/opt/odoo`.
 - Odoo is installed in editable mode in a virtualenv isolated from system python packages.
 - The Odoo configuration file exists at `$ODOO_RC`.
