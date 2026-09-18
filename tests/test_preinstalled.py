@@ -18,6 +18,15 @@ def test_odoo_bin_in_path():
 def test_wkhtomtopdf_in_path():
     assert shutil.which("wkhtmltopdf")
 
+@pytest.mark.skipif(
+    float(os.environ["ODOO_VERSION"]) < 20, reason="Paper-muncher is only needed for Odoo 20 and above"
+)
+def test_papermuncher_in_path():
+    assert shutil.which("paper-muncher")
+
+def test_rtlcss_in_path():
+    assert shutil.which("rtlcss")
+
 
 def test_python_in_path():
     assert shutil.which("python")
