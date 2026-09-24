@@ -29,6 +29,7 @@ RUN mkdir -p ~/.gnupg \
     && echo connect-timeout 600 >> ~/.gnupg/dirmngr.conf
 
 ARG odoo_version
+
 # Install wkhtml
 RUN case $(lsb_release -c -s) in \
         focal) WKHTML_DEB_URL=https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.focal_amd64.deb ;; \
@@ -39,9 +40,8 @@ RUN case $(lsb_release -c -s) in \
     && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends /tmp/wkhtml.deb  \
     && rm /tmp/wkhtml.deb
 
-ARG odoo_version
+# Install paper-muncher
 ARG paper_muncher_version=v0.7.1
-
 RUN ODOO_MAJOR=$(echo "$odoo_version" | grep -oE '^[0-9]+' || true) \
     && ODOO_MAJOR=${ODOO_MAJOR:-99} \
     && if [ "$ODOO_MAJOR" -ge 20 ]; then \
