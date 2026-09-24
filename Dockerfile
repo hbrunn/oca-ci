@@ -29,6 +29,7 @@ RUN mkdir -p ~/.gnupg \
     && echo connect-timeout 600 >> ~/.gnupg/dirmngr.conf
 
 ARG odoo_version
+
 # Install wkhtml
 RUN case $(lsb_release -c -s) in \
         focal) WKHTML_DEB_URL=https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.focal_amd64.deb ;; \
@@ -39,9 +40,8 @@ RUN case $(lsb_release -c -s) in \
     && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends /tmp/wkhtml.deb  \
     && rm /tmp/wkhtml.deb
 
-ARG odoo_version
+# Install paper-muncher
 ARG paper_muncher_version=v0.7.1
-
 RUN ODOO_MAJOR=$(echo "$odoo_version" | grep -oE '^[0-9]+' || true) \
     && ODOO_MAJOR=${ODOO_MAJOR:-99} \
     && if [ "$ODOO_MAJOR" -ge 20 ]; then \
@@ -137,9 +137,14 @@ RUN SHA=$(jq -r .object.sha /tmp/branch.json) \
 # latest version works with all versions of Odoo that we support here, and the
 # oldest pinned in Odoo's requirements.txt don't have wheels, and don't build
 # anymore with the latest cython.
+# Install optional Odoo dependencies. 
+# TODO: we may want to do a distinct list for each Odoo version
+# - markdown2: to silence a warning in Odoo >= 20
+# - packaging: to support external dependencies with version requirements in Odoo >= 18
 RUN sed -i -E "s/^(gevent|greenlet)==.*/\1/" /tmp/ocb-requirements.txt \
  && pip install --no-cache-dir \
       -r /tmp/ocb-requirements.txt \
+      markdown2 \
       packaging
 
 # Install other test requirements.
